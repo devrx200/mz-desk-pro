@@ -20,8 +20,11 @@ const OwnerDashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>🏢 Owner Dashboard</h1>
-        <p>Welcome back! Here's your cyber cafe performance today.</p>
+        <h1>
+          <i className="bi bi-building-fill"></i>
+          Owner Dashboard
+        </h1>
+        <p>Welcome back! Here's your cyber cafe performance today - Track your business growth</p>
       </div>
 
       <div className="stats-grid">

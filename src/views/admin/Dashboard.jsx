@@ -20,8 +20,11 @@ const AdminDashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>👑 Admin Dashboard</h1>
-        <p>System-wide overview and management</p>
+        <h1>
+          <i className="bi bi-shield-fill-check"></i>
+          Admin Dashboard
+        </h1>
+        <p>System-wide overview and management - Control your entire business ecosystem</p>
       </div>
 
       <div className="stats-grid">

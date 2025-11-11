@@ -139,7 +139,7 @@ const ClientFooter = () => {
           <Row className="align-items-center">
             <Col md="6" className="text-center text-md-start mb-3 mb-md-0">
               <p className="mb-0" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                Product Of <a href="http://marutiitzone.com" target="_blank" rel="noopener noreferrer" className="text-warning text-decoration-none fw-bold">Maruti IT Zone</a>
+                Product Of <a  href="http://marutiitzone.com" target="_blank" rel="noopener noreferrer" className="text-warning text-decoration-none fw-bold">Maruti IT Zone</a>
                 {' '} © {currentYear} <span className="text-white fw-semibold">MZ-Desk</span>. All Rights Reserved.
               </p>
             </Col>

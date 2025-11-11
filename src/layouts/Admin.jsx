@@ -41,20 +41,46 @@ const Admin = () => {
   };
 
   const getRoutes = (userRoutes) => {
-    return userRoutes.map((prop, key) => {
-      return (
-        <Route path={prop.path} element={prop.component} key={key} />
-      );
+    const allRoutes = [];
+
+    userRoutes.forEach((prop, key) => {
+      // Handle routes with submenus
+      if (prop.submenu) {
+        prop.submenu.forEach((subItem, subKey) => {
+          allRoutes.push(
+            <Route path={subItem.path} element={subItem.component} key={`${key}-${subKey}`} />
+          );
+        });
+      }
+      // Handle regular routes
+      else if (prop.path) {
+        allRoutes.push(
+          <Route path={prop.path} element={prop.component} key={key} />
+        );
+      }
     });
+
+    return allRoutes;
   };
 
   const getBrandText = () => {
     const userRoutes = getUserRoutes();
     const currentPath = location.pathname.split('/').pop();
+    const fullCurrentPath = location.pathname;
 
+    // Check regular routes
     for (let i = 0; i < userRoutes.length; i++) {
       if (userRoutes[i].path === `/${currentPath}`) {
         return userRoutes[i].name;
+      }
+
+      // Check submenu routes
+      if (userRoutes[i].submenu) {
+        for (let j = 0; j < userRoutes[i].submenu.length; j++) {
+          if (fullCurrentPath.includes(userRoutes[i].submenu[j].path)) {
+            return userRoutes[i].submenu[j].name;
+          }
+        }
       }
     }
     return 'Dashboard';
@@ -81,7 +107,6 @@ const Admin = () => {
       {sidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
       <div className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`} ref={mainContent}>
         <AdminNavbar
-          brandText={getBrandText()}
           toggleSidebar={toggleSidebar}
         />
         <div className="content-wrapper">

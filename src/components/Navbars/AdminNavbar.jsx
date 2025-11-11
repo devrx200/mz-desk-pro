@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
   Dropdown,
@@ -15,21 +15,107 @@ import {
 } from 'reactstrap';
 import './AdminNavbar.css';
 
-const AdminNavbar = ({ brandText, toggleSidebar }) => {
+const AdminNavbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationModal, setNotificationModal] = useState(false);
   const [messageModal, setMessageModal] = useState(false);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleNotificationModal = () => setNotificationModal(!notificationModal);
   const toggleMessageModal = () => setMessageModal(!messageModal);
 
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  // Generate breadcrumb from current path
+  const generateBreadcrumb = () => {
+    const pathSegments = location.pathname.split('/').filter(segment => segment);
+    const breadcrumbs = [];
+
+    // Add Home/Dashboard
+    breadcrumbs.push({
+      name: 'Home',
+      path: `/${user?.role}/dashboard`,
+      icon: <i className="bi bi-house-door-fill"></i>
+    });
+
+    // Process path segments
+    let currentPath = '';
+    pathSegments.forEach((segment, index) => {
+      // Skip the role segment (admin/owner/operator)
+      if (index === 0) {
+        currentPath = `/${segment}`;
+        return;
+      }
+
+      currentPath += `/${segment}`;
+
+      // Format segment name (capitalize and replace hyphens)
+      const formattedName = segment
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+
+      breadcrumbs.push({
+        name: formattedName,
+        path: currentPath,
+        isLast: index === pathSegments.length - 1
+      });
+    });
+
+    return breadcrumbs;
+  };
+
+  // Format date and time
+  const formatDateTime = () => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const dayName = days[currentDateTime.getDay()];
+    const monthName = months[currentDateTime.getMonth()];
+    const date = currentDateTime.getDate();
+    const year = currentDateTime.getFullYear();
+
+    // Format time with AM/PM
+    let hours = currentDateTime.getHours();
+    const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
+    const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const formattedHours = hours.toString().padStart(2, '0');
+
+    return {
+      dayName,
+      monthName,
+      date,
+      year,
+      time: `${formattedHours}:${minutes}:${seconds}`,
+      ampm,
+      fullDate: `${dayName},  ${date} - ${monthName} - ${year}`
+    };
+  };
+
+  const breadcrumbs = generateBreadcrumb();
+  const dateTime = formatDateTime();
 
   // Sample notifications data
   const notifications = [
@@ -53,27 +139,69 @@ const AdminNavbar = ({ brandText, toggleSidebar }) => {
 
   return (
     <>
-      <nav className="navbar bg-dark">
+      <nav className="navbar navbar-gradient">
         <div className="navbar-container">
           <div className="navbar-left">
             <button className="mobile-menu-toggle" onClick={toggleSidebar}>
               <i className="bi bi-list fs-3"></i>
             </button>
-            <div className="navbar-brand">
-              <h2 className="navbar-title text-white">{"|| "}{ brandText || 'Dashboard'} {">"}</h2>
+
+            {/* Breadcrumb Navigation */}
+            <div className="breadcrumb-container">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb mb-0">
+                  {breadcrumbs.map((crumb, index) => (
+                    <li
+                      key={index}
+                      className={`breadcrumb-item ${crumb.isLast ? 'active' : ''}`}
+                    >
+                      {crumb.isLast ? (
+                        <span className="breadcrumb-current">
+                          {crumb.icon && <span className="breadcrumb-icon">{crumb.icon}</span>}
+                          {crumb.name}
+                        </span>
+                      ) : (
+                        <Link to={crumb.path} className="breadcrumb-link">
+                          {crumb.icon && <span className="breadcrumb-icon">{crumb.icon}</span>}
+                          {crumb.name}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </nav>
             </div>
           </div>
+
           <div className="navbar-actions">
+            {/* Date and Time Info */}
+            <div className="datetime-info">
+              <div className="datetime-row">
+                <span className="datetime-icon">
+                  <i className="bi bi-calendar-event-fill"></i>
+                </span>
+                <span className="datetime-text">{dateTime.fullDate}</span>
+              </div>
+              <div className="datetime-row">
+                <span className="datetime-icon">
+                  <i className="bi bi-clock-fill"></i>
+                </span>
+                <span className="datetime-text time-display">
+                  {dateTime.time} <span className="ampm-badge">{dateTime.ampm}</span>
+                </span>
+              </div>
+            </div>
+
             <div className="navbar-icons">
               {/* Notifications */}
-              <button className="icon-btn bg-primary" title="Notifications" onClick={toggleNotificationModal}>
-                <i className="bi bi-bell-fill fs-5 text-white"></i>
+              <button className="icon-btn" title="Notifications" onClick={toggleNotificationModal}>
+                <i className="bi bi-bell-fill fs-5"></i>
                 {unreadNotifications > 0 && <span className="badge">{unreadNotifications}</span>}
               </button>
 
               {/* Messages */}
-              <button className="icon-btn bg-info " title="Messages" onClick={toggleMessageModal}>
-                <i className="bi bi-chat-dots-fill fs-5 text-white"></i>
+              <button className="icon-btn" title="Messages" onClick={toggleMessageModal}>
+                <i className="bi bi-chat-dots-fill fs-5"></i>
                 {unreadMessages > 0 && <span className="badge">{unreadMessages}</span>}
               </button>
 
