@@ -13,7 +13,6 @@ import {
   Input,
   InputGroup
 } from 'reactstrap';
-import './Messages.css';
 
 const Messages = () => {
   const [filter, setFilter] = useState('all'); // all, unread, read

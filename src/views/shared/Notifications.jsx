@@ -11,7 +11,6 @@ import {
   ListGroup,
   ListGroupItem
 } from 'reactstrap';
-import './Notifications.css';
 
 const Notifications = () => {
   const [filter, setFilter] = useState('all'); // all, unread, read

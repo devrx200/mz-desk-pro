@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import './Users.css';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Button,
+  Badge,
+  Input,
+  InputGroup,
+  Table
+} from 'reactstrap';
 
 const Users = () => {
   const { user } = useAuth();
@@ -25,109 +36,167 @@ const Users = () => {
 
   const getRoleIcon = (role) => {
     switch(role) {
-      case 'admin': return '👑';
-      case 'owner': return '🏢';
-      case 'operator': return '👤';
-      default: return '👤';
+      case 'admin': return 'bi-shield-fill-check';
+      case 'owner': return 'bi-building-fill';
+      case 'operator': return 'bi-person-fill';
+      default: return 'bi-person-fill';
     }
   };
 
-  const getRoleBadgeClass = (role) => {
+  const getRoleBadgeColor = (role) => {
     switch(role) {
-      case 'admin': return 'badge-admin';
-      case 'owner': return 'badge-owner';
-      case 'operator': return 'badge-operator';
-      default: return 'badge-default';
+      case 'admin': return 'danger';
+      case 'owner': return 'primary';
+      case 'operator': return 'success';
+      default: return 'secondary';
     }
   };
 
   return (
-    <div className="users-container">
-      <div className="page-header">
-        <div>
-          <h1>👥 User Management</h1>
-          <p>Manage system users and their roles</p>
-        </div>
-        <button className="btn-primary">
-          ➕ Add New User
-        </button>
+    <Container fluid className="p-0">
+      {/* Page Header */}
+      <div className="mb-4" style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: '2rem',
+        borderRadius: '0 0 1rem 1rem',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+      }}>
+        <Row className="align-items-center">
+          <Col xs="12" md="8">
+            <h1 className="text-white mb-2 d-flex align-items-center">
+              <i className="bi bi-people-fill me-3" style={{ fontSize: '2.5rem' }}></i>
+              User Management
+            </h1>
+            <p className="text-white mb-0" style={{ opacity: 0.9 }}>
+              Manage system users and their roles
+            </p>
+          </Col>
+          <Col xs="12" md="4" className="text-md-end mt-3 mt-md-0">
+            <Button color="light" size="lg">
+              <i className="bi bi-person-plus-fill me-2"></i>
+              Add New User
+            </Button>
+          </Col>
+        </Row>
       </div>
 
-      <div className="filters-section">
-        <div className="search-box">
-          <span className="search-icon">🔍</span>
-          <input
-            type="text"
-            placeholder="Search users by name or email..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+      {/* Filters Section */}
+      <Row className="mb-4">
+        <Col lg="8" className="mb-3 mb-lg-0">
+          <Card className="shadow-sm">
+            <CardBody>
+              <InputGroup>
+                <span className="input-group-text bg-white">
+                  <i className="bi bi-search"></i>
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Search users by name or email..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </InputGroup>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg="4">
+          <Card className="shadow-sm">
+            <CardBody>
+              <div className="d-flex align-items-center">
+                <label className="mb-0 me-3 text-nowrap">
+                  <i className="bi bi-funnel me-2"></i>
+                  Filter by Role:
+                </label>
+                <Input
+                  type="select"
+                  value={filterRole}
+                  onChange={(e) => setFilterRole(e.target.value)}
+                >
+                  <option value="all">All Roles</option>
+                  <option value="admin">Admin</option>
+                  <option value="owner">Owner</option>
+                  <option value="operator">Operator</option>
+                </Input>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
 
-        <div className="filter-group">
-          <label>Filter by Role:</label>
-          <select value={filterRole} onChange={(e) => setFilterRole(e.target.value)}>
-            <option value="all">All Roles</option>
-            <option value="admin">Admin</option>
-            <option value="owner">Owner</option>
-            <option value="operator">Operator</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="users-table-container">
-        <table className="users-table">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Role</th>
-              <th>Shop/Location</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map(u => (
-              <tr key={u.id}>
-                <td>
-                  <div className="user-info">
-                    <span className="user-icon">{getRoleIcon(u.role)}</span>
-                    <span className="user-name">{u.name}</span>
-                  </div>
-                </td>
-                <td>{u.email}</td>
-                <td>{u.phone}</td>
-                <td>
-                  <span className={`role-badge ${getRoleBadgeClass(u.role)}`}>
-                    {u.role.charAt(0).toUpperCase() + u.role.slice(1)}
-                  </span>
-                </td>
-                <td>{u.shopName}</td>
-                <td>
-                  <span className={`status-badge ${u.status === 'active' ? 'status-active' : 'status-inactive'}`}>
-                    {u.status === 'active' ? '✓ Active' : '✗ Inactive'}
-                  </span>
-                </td>
-                <td>
-                  <div className="action-buttons">
-                    <button className="btn-icon" title="Edit">✏️</button>
-                    <button className="btn-icon" title="Delete">🗑️</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {filteredUsers.length === 0 && (
-        <div className="no-data">
-          <p>No users found matching your criteria</p>
-        </div>
-      )}
-    </div>
+      {/* Users Table */}
+      <Card className="shadow-sm">
+        <CardBody className="p-0">
+          <div style={{ overflowX: 'auto' }}>
+            <Table hover responsive className="mb-0">
+              <thead style={{ background: 'linear-gradient(87deg, #5e72e4 0, #825ee4 100%)', color: 'white' }}>
+                <tr>
+                  <th className="border-0">User</th>
+                  <th className="border-0">Email</th>
+                  <th className="border-0">Phone</th>
+                  <th className="border-0">Role</th>
+                  <th className="border-0">Shop/Location</th>
+                  <th className="border-0">Status</th>
+                  <th className="border-0 text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredUsers.map(u => (
+                  <tr key={u.id}>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <div className="rounded-circle d-inline-flex align-items-center justify-content-center me-2"
+                          style={{
+                            width: '35px',
+                            height: '35px',
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            color: 'white',
+                            fontSize: '1rem'
+                          }}>
+                          <i className={`bi ${getRoleIcon(u.role)}`}></i>
+                        </div>
+                        <strong>{u.name}</strong>
+                      </div>
+                    </td>
+                    <td>{u.email}</td>
+                    <td>{u.phone}</td>
+                    <td>
+                      <Badge color={getRoleBadgeColor(u.role)} pill>
+                        {u.role.charAt(0).toUpperCase() + u.role.slice(1)}
+                      </Badge>
+                    </td>
+                    <td>{u.shopName}</td>
+                    <td>
+                      <Badge color={u.status === 'active' ? 'success' : 'secondary'} pill>
+                        {u.status === 'active' && <i className="bi bi-check-circle me-1"></i>}
+                        {u.status === 'inactive' && <i className="bi bi-x-circle me-1"></i>}
+                        {u.status.charAt(0).toUpperCase() + u.status.slice(1)}
+                      </Badge>
+                    </td>
+                    <td>
+                      <div className="d-flex gap-1 justify-content-center">
+                        <Button color="primary" size="sm" outline title="Edit">
+                          <i className="bi bi-pencil-fill"></i>
+                        </Button>
+                        <Button color="danger" size="sm" outline title="Delete">
+                          <i className="bi bi-trash-fill"></i>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+          {filteredUsers.length === 0 && (
+            <div className="text-center py-5">
+              <i className="bi bi-inbox" style={{ fontSize: '4rem', color: '#dee2e6' }}></i>
+              <h4 className="mt-3 text-muted">No users found</h4>
+              <p className="text-muted">Try changing your search or filter criteria</p>
+            </div>
+          )}
+        </CardBody>
+      </Card>
+    </Container>
   );
 };
 
