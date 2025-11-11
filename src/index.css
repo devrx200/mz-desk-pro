@@ -1,0 +1,624 @@
+/* ========================================
+   MZ-Desk - Business Management System
+   Custom CSS with Bootstrap 5
+   ======================================== */
+
+:root {
+  /* Bootstrap Custom Colors */
+  --bs-primary: #5e72e4;
+  --bs-secondary: #f7fafc;
+  --bs-success: #2dce89;
+  --bs-info: #11cdef;
+  --bs-warning: #fb6340;
+  --bs-danger: #f5365c;
+  --bs-dark: #172b4d;
+  --bs-light: #f6f9fc;
+
+  /* Custom Brand Colors */
+  --primary-color: #5e72e4;
+  --secondary-color: #f7fafc;
+  --success-color: #2dce89;
+  --info-color: #11cdef;
+  --warning-color: #fb6340;
+  --danger-color: #f5365c;
+  --dark-color: #172b4d;
+  --light-color: #f6f9fc;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-primary-alt: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+  --gradient-success: linear-gradient(87deg, #2dce89 0, #2dcecc 100%);
+  --gradient-info: linear-gradient(87deg, #11cdef 0, #1171ef 100%);
+  --gradient-warning: linear-gradient(87deg, #fb6340 0, #fbb140 100%);
+  --gradient-danger: linear-gradient(87deg, #f5365c 0, #f56036 100%);
+  --gradient-dark: linear-gradient(87deg, #172b4d 0, #1a1f36 100%);
+
+  /* Text Colors */
+  --text-primary: #32325d;
+  --text-secondary: #8898aa;
+  --text-muted: #adb5bd;
+
+  /* Background Colors */
+  --bg-default: #f8f9fa;
+  --bg-secondary: #f7fafc;
+  --bg-white: #ffffff;
+
+  /* Border & Shadow */
+  --border-color: #e9ecef;
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-default);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ========================================
+   Bootstrap Color Overrides
+   ======================================== */
+
+/* Primary */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #324cdd !important;
+  border-color: #324cdd !important;
+  color: #fff !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* Success */
+.btn-success {
+  background-color: var(--success-color) !important;
+  border-color: var(--success-color) !important;
+  color: #fff !important;
+}
+
+.btn-success:hover {
+  background-color: #24a46d !important;
+  border-color: #24a46d !important;
+}
+
+.bg-success {
+  background-color: var(--success-color) !important;
+}
+
+.text-success {
+  color: var(--success-color) !important;
+}
+
+/* Info */
+.btn-info {
+  background-color: var(--info-color) !important;
+  border-color: var(--info-color) !important;
+  color: #fff !important;
+}
+
+.btn-info:hover {
+  background-color: #0da5c0 !important;
+  border-color: #0da5c0 !important;
+}
+
+.bg-info {
+  background-color: var(--info-color) !important;
+}
+
+.text-info {
+  color: var(--info-color) !important;
+}
+
+/* Warning */
+.btn-warning {
+  background-color: var(--warning-color) !important;
+  border-color: var(--warning-color) !important;
+  color: #fff !important;
+}
+
+.btn-warning:hover {
+  background-color: #fa441b !important;
+  border-color: #fa441b !important;
+}
+
+.bg-warning {
+  background-color: var(--warning-color) !important;
+}
+
+.text-warning {
+  color: var(--warning-color) !important;
+}
+
+/* Danger */
+.btn-danger {
+  background-color: var(--danger-color) !important;
+  border-color: var(--danger-color) !important;
+  color: #fff !important;
+}
+
+.btn-danger:hover {
+  background-color: #ec0c38 !important;
+  border-color: #ec0c38 !important;
+}
+
+.bg-danger {
+  background-color: var(--danger-color) !important;
+}
+
+.text-danger {
+  color: var(--danger-color) !important;
+}
+
+/* Dark */
+.btn-dark {
+  background-color: var(--dark-color) !important;
+  border-color: var(--dark-color) !important;
+  color: #fff !important;
+}
+
+.btn-dark:hover {
+  background-color: #0b1526 !important;
+  border-color: #0b1526 !important;
+}
+
+.bg-dark {
+  background-color: var(--dark-color) !important;
+}
+
+.text-dark {
+  color: var(--dark-color) !important;
+}
+
+/* Light */
+.bg-light {
+  background-color: var(--light-color) !important;
+}
+
+/* White */
+.bg-white {
+  background-color: var(--bg-white) !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+/* Muted */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* ========================================
+   Form Controls
+   ======================================== */
+
+.form-control,
+.form-select {
+  background-color: #fff !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  transition: all 0.15s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #fff !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(94, 114, 228, 0.25) !important;
+  color: var(--text-primary) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7;
+}
+
+.form-label {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Input Groups */
+.input-group-text {
+  background-color: #fff !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ========================================
+   Custom Utility Classes
+   ======================================== */
+
+/* Hero Section Backgrounds */
+.hero-gradient {
+  background: var(--gradient-primary);
+  min-height: 600px;
+}
+
+.hero-gradient-sm {
+  background: var(--gradient-primary);
+  min-height: 300px;
+}
+
+.hero-gradient-md {
+  background: var(--gradient-primary);
+  min-height: 400px;
+}
+
+.hero-gradient-xs {
+  background: var(--gradient-primary);
+  min-height: 250px;
+}
+
+/* Card Gradient Background */
+.card-gradient {
+  background: var(--gradient-primary) !important;
+}
+
+/* Bootstrap Gradient Backgrounds */
+.bg-gradient-primary {
+  background: var(--gradient-primary-alt) !important;
+}
+
+.bg-gradient-success {
+  background: var(--gradient-success) !important;
+}
+
+.bg-gradient-info {
+  background: var(--gradient-info) !important;
+}
+
+.bg-gradient-warning {
+  background: var(--gradient-warning) !important;
+}
+
+.bg-gradient-danger {
+  background: var(--gradient-danger) !important;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: var(--gradient-primary-alt);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Icon Containers */
+.icon-box {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   Hover Effects
+   ======================================== */
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+/* ========================================
+   Navigation Styles
+   ======================================== */
+
+/* Navbar */
+.navbar-custom {
+  transition: all 0.3s ease;
+}
+
+.navbar-custom.scrolled {
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Logo */
+.logo-icon {
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+}
+
+.logo-icon.scrolled {
+  width: 35px;
+  height: 35px;
+}
+
+.navbar-brand-custom:hover .logo-icon {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.brand-subtitle {
+  font-size: 0.7rem;
+  margin-top: -2px;
+}
+
+.nav-gap {
+  gap: 0.5rem;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 30px;
+  background: #e9ecef;
+}
+
+/* Desktop Navigation Links */
+.nav-link-custom {
+  color: #525f7f !important;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.nav-link-custom:hover {
+  background: var(--gradient-primary-alt) !important;
+  color: white !important;
+  transform: translateY(-2px);
+}
+
+.nav-link-custom:hover i,
+.nav-link-custom:hover span {
+  color: white !important;
+}
+
+.nav-link-custom.active {
+  background: linear-gradient(87deg, #172b4d 0, #1a1f36 100%) !important;
+  color: white !important;
+}
+
+.nav-link-custom.active i,
+.nav-link-custom.active span {
+  color: white !important;
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  width: 280px !important;
+  max-width: 85vw !important;
+}
+
+.mobile-nav-link {
+  color: #525f7f !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+  background: var(--gradient-primary-alt) !important;
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.mobile-nav-link:hover i,
+.mobile-nav-link:hover span {
+  color: white !important;
+}
+
+.mobile-nav-link.active {
+  background: linear-gradient(87deg, #172b4d 0, #1a1f36 100%) !important;
+  color: white !important;
+}
+
+.mobile-nav-link.active i,
+.mobile-nav-link.active span {
+  color: white !important;
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   Responsive Utilities
+   ======================================== */
+
+@media (max-width: 767.98px) {
+  .hero-gradient {
+    min-height: 500px;
+  }
+  .hero-gradient-md {
+    min-height: 300px;
+  }
+}
+
+/* ========================================
+   Card Styles
+   ======================================== */
+
+.card {
+  background-color: var(--bg-white) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  background-color: var(--bg-secondary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  padding: 1rem 1.5rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  color: var(--text-secondary) !important;
+}
+
+/* ========================================
+   Footer Styles
+   ======================================== */
+
+footer {
+  background-color: var(--dark-color) !important;
+  color: #fff !important;
+}
+
+footer h5,
+footer h6 {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+footer p,
+footer li,
+footer span {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  color: #fff !important;
+  transform: translateX(3px);
+  display: inline-block;
+}
+
+footer .text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+footer .text-white {
+  color: #fff !important;
+}
+
+footer .text-warning {
+  color: var(--warning-color) !important;
+}
+
+footer .fw-semibold,
+footer .fw-bold {
+  color: #fff !important;
+}
+
+/* ========================================
+   Icon Containers
+   ======================================== */
+
+.icon-box {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   List Styles
+   ======================================== */
+
+.list-group-item {
+  background-color: transparent !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.list-group-item:hover {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* ========================================
+   Responsive Utilities
+   ======================================== */
+
+@media (max-width: 767.98px) {
+  .hero-gradient {
+    min-height: 500px;
+  }
+  .hero-gradient-md {
+    min-height: 300px;
+  }
+  .hero-gradient-sm {
+    min-height: 250px;
+  }
+}
+
